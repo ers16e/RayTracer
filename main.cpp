@@ -16,8 +16,10 @@ int main()
 	config.Height = 1080;
 	config.Width = 1920;
 	Scene scene(config);
-	scene.AddLight(new Light(glm::vec3(2, 2, -10), glm::vec3(1, 1, 1), 10));
-	scene.AddObject(new Sphere(2.0, glm::vec3(1, 1, -5), glm::vec3(0, 100, 0)));
-	scene.AddObject(new Sphere(1.0, glm::vec3(-1, -1, -2), glm::vec3(45, 45, 125)));
+	
+	scene.AddObject(new Sphere(1.0, glm::vec3(-2, 0, -6), glm::vec3(0, 100, 0)));
+	scene.AddObject(new Sphere(1.0, glm::vec3(2, 0, -6), glm::vec3(45, 45, 125)));
+	scene.AddLight(new Light(glm::vec3(4, 4, -3), glm::vec3(1, 1, 1), 1));
 	scene.Render();
+
 }

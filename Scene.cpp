@@ -38,7 +38,7 @@ void Scene::Render()
 	int height = config.Height;
 	float aspectRatio = width / height;
 	float fov = config.Fov;
-	glm::vec3 *image = new glm::vec3[width*height+1];
+	glm::vec3 *image = new glm::vec3[width*height];
 	std::cout << image[250].x + image[280].y + image[280].z;
 	int counter = 0;
 	for (int y = 0; y < height; ++y)
@@ -95,6 +95,7 @@ void Scene::Render()
 					}
 					netIllumination += currentIllumination;
 				}
+				image[counter++] = minObject->GetColor() * netIllumination;
 			}
 			else
 			{
@@ -105,9 +106,9 @@ void Scene::Render()
 	std::ofstream ofs("./out.ppm", std::ios::out | std::ios::binary);
 	ofs << "P6\n" << config.Width << " " << config.Height << "\n255\n";
 	for (uint32_t i = 0; i < config.Height * config.Width; ++i) {
-		char r = (char)(255 * image[i].r);
-		char g = (char)(255 * image[i].g);
-		char b = (char)(255 * image[i].b);
+		char r = (char)(image[i].r);
+		char g = (char)(image[i].g);
+		char b = (char)(image[i].b);
 		ofs << r << g << b;
 	}
 
