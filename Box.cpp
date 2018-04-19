@@ -66,6 +66,11 @@ Hit Box::Intersect(const Ray& ray)
 		hit.Time0 = tmin;
 		hit.Time1 = tmax;
 	}
+	if(hit.Time0 < 0.01)
+	{
+		hit.Success = false;
+		return hit;
+	}
 	hit.Success = true;
 	hit.Object = this;
 	
