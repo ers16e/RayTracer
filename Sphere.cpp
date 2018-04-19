@@ -4,6 +4,7 @@
 
 Sphere::Sphere(const double &radius, const glm::vec3 &position, const glm::vec3 &color) : SceneObject(position, color), mRadius(radius)
 {
+	
 }
 
 Sphere::~Sphere()

@@ -73,6 +73,9 @@
     <IncludePath>E:\Programming Libraries\includes;$(IncludePath)</IncludePath>
     <LibraryPath>E:\Programming Libraries\libs;$(LibraryPath)</LibraryPath>
   </PropertyGroup>
+  <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|Win32'">
+    <IncludePath>E:\Programming Libraries\includes;$(IncludePath)</IncludePath>
+  </PropertyGroup>
   <ItemDefinitionGroup Condition="'$(Configuration)|$(Platform)'=='Debug|Win32'">
     <ClCompile>
       <WarningLevel>Level3</WarningLevel>
@@ -115,14 +118,17 @@
     </Link>
   </ItemDefinitionGroup>
   <ItemGroup>
+    <ClInclude Include="Box.h" />
     <ClInclude Include="Hit.h" />
     <ClInclude Include="Light.h" />
     <ClInclude Include="Ray.h" />
+    <ClInclude Include="resource.h" />
     <ClInclude Include="Scene.h" />
     <ClInclude Include="SceneObject.h" />
     <ClInclude Include="Sphere.h" />
   </ItemGroup>
   <ItemGroup>
+    <ClCompile Include="Box.cpp" />
     <ClCompile Include="Hit.cpp" />
     <ClCompile Include="main.cpp" />
     <ClCompile Include="Light.cpp" />

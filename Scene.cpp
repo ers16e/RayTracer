@@ -3,6 +3,8 @@
 #include <math.h>
 #include <fstream>
 #include <algorithm>
+#include <string>
+#include <ctime>
 
 
 Scene::Scene(SceneConfig config):config(config)
@@ -32,14 +34,14 @@ void Scene::AddLight(Light* light)
 	mLights.push_back(light);
 }
 
-void Scene::Render()
+void Scene::Render(int fileNumber)
 {
-	int width = config.Width;
-	int height = config.Height;
+	auto begin = std::clock();
+	float width = config.Width;
+	float height = config.Height;
 	float aspectRatio = width / height;
 	float fov = config.Fov;
 	glm::vec3 *image = new glm::vec3[width*height];
-	std::cout << image[250].x + image[280].y + image[280].z;
 	int counter = 0;
 	for (int y = 0; y < height; ++y)
 	{
@@ -103,8 +105,16 @@ void Scene::Render()
 			}
 		}
 	}
-	std::ofstream ofs("./out.ppm", std::ios::out | std::ios::binary);
+	auto endClock = std::clock();
+	double elapsed_secs = double(endClock - begin) / CLOCKS_PER_SEC;
+	std::cout << "FPS: " << 1 / elapsed_secs << std::endl;
+	std::string path = "./Render/out" + std::to_string(fileNumber) + ".ppm";
+	std::ofstream ofs(path, std::ios::out | std::ios::binary);
 	ofs << "P6\n" << config.Width << " " << config.Height << "\n255\n";
+	if(!ofs.is_open())
+	{
+		std::cout << "WTF" << std::endl;
+	}
 	for (uint32_t i = 0; i < config.Height * config.Width; ++i) {
 		char r = (char)(image[i].r);
 		char g = (char)(image[i].g);
@@ -114,4 +124,17 @@ void Scene::Render()
 
 	ofs.close();
 	delete[] image;
+
+}
+
+void Scene::PopLight()
+{
+	delete *(mLights.end() - 1);
+	mLights.pop_back();
+}
+
+void Scene::PopObject()
+{
+	delete (*mObjects.end()-1);
+	mObjects.pop_back();
 }

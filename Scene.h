@@ -4,12 +4,11 @@
 #include <glm/glm.hpp>
 #include "SceneObject.h"
 #include "Light.h"
-#define _USE_MATH_DEFINES
+#include <corecrt_math_defines.h>
 
 struct SceneConfig
 {
-	int Width, Height;
-	float Fov;
+	float Width, Height, Fov;
 };
 
 class Scene
@@ -18,8 +17,10 @@ public:
 	explicit Scene(SceneConfig config);
 	~Scene();
 	void AddObject(SceneObject *object);
+	void PopLight();
+	void PopObject();
 	void AddLight(Light *light);
-	void Render();
+	void Render(int fileNumber);
 
 private:
 	glm::vec2 mDim;
