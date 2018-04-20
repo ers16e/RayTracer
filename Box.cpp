@@ -71,6 +71,7 @@ Hit Box::Intersect(const Ray& ray)
 		hit.Success = false;
 		return hit;
 	}
+	hit.Position = ray.Origin + ray.Direction * hit.Time0;
 	hit.Success = true;
 	hit.Object = this;
 	

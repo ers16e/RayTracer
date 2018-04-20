@@ -32,5 +32,7 @@ Hit Sphere::Intersect(const Ray& ray)
 	hit.Time1 = tca + thc;
 	hit.Success = true;
 	hit.Object = this;
+	hit.Position = ray.Origin + ray.Direction * hit.Time0;
+	hit.Normal = glm::normalize(hit.Position - mPosition);
 	return hit;
 }

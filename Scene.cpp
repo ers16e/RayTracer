@@ -50,25 +50,24 @@ void Scene::Render(int fileNumber)
 			float px = (2 * ((x + 0.5) / width) - 1)*std::tan(fov / 2 * M_PI / 180) * aspectRatio;
 			float py = 1 - 2 * ((y + 0.5) / height)*std::tan(fov / 2 * M_PI / 180);
 			Ray primaryRay(glm::vec3(0,0,0),glm::vec3(px,py,-1));
-			float minTime = 1e8;
-			SceneObject *minObject = nullptr;
+			Hit minHit;
+			minHit.Time0 = INFINITY;
 			for(auto itr = mObjects.begin(); itr != mObjects.end();++itr)
 			{
 
 				Hit hit = (*itr)->Intersect(primaryRay);
 				if (hit.Success)
 				{
-					if(hit.Time0 < minTime)
+					if(hit.Time0 < minHit.Time0)
 					{
-						minTime = hit.Time0;
-						minObject = hit.Object;
+						minHit = hit;
 					}
 				}
 			}
-			if(minObject != nullptr)
+			if(minHit.Object != nullptr)
 			{
-				glm::vec3 hitPosition = primaryRay.Origin + primaryRay.Direction * minTime;
-				glm::vec3 objectColor = minObject->GetColor();
+				glm::vec3 hitPosition = primaryRay.Origin + primaryRay.Direction * minHit.Time0;
+				glm::vec3 objectColor = minHit.Object->GetColor();
 				glm::vec3 netIllumination(0, 0, 0);
 				for(auto itr = mLights.begin(); itr != mLights.end(); ++itr)
 				{
@@ -97,7 +96,7 @@ void Scene::Render(int fileNumber)
 					}
 					netIllumination += currentIllumination;
 				}
-				image[counter++] = minObject->GetColor() * netIllumination;
+				image[counter++] = minHit.Object->GetColor() * netIllumination;
 			}
 			else
 			{

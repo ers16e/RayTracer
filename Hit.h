@@ -11,6 +11,8 @@ public:
 	bool Success;
 	float Time0;
 	float Time1;
+	glm::vec3 Position;
+	glm::vec3 Normal;
 	SceneObject *Object;
 };
 
